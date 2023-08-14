@@ -1,11 +1,103 @@
-// - Problem: Storing the two number in variables
-// - Then continue with the rest
+let firstOperand, secondOperand;
+let operator;
+let result;
+let currentScreen = 0;
 
-let buttons = document.querySelectorAll("button");
-let screen = document.getElementById("screen")
+const buttons = document.querySelectorAll("button");
 
+function updateScreen() {
+  const screen = document.getElementById("screen");
+  screen.innerText = currentScreen;
+  if (currentScreen.length > 9) {
+    screen.innerText = currentScreen.substring(0, 9);
+  }
+}
 
+updateScreen();
 
+function manageInput() {
+  buttons.forEach((button) => {
+    if (button.classList.contains("operand")) {
+      button.addEventListener("click", () => {
+        if(button.value !== 0){
+          operatorIn(button.value);
+          updateScreen();
+        }
+      });
+    } else if (button.classList.contains("operator")) {
+      button.addEventListener("click", () => {
+        store(button.value);
+      });
+    } else if (button.classList.contains("sign")) {
+      button.addEventListener("click", () => {
+        sign();
+      });
+    } else if (button.classList.contains("percent")) {
+      button.addEventListener("click", () => {
+        percentIt();
+      });
+    } else if (button.classList.contains("clear")) {
+      button.addEventListener("click", () => {
+        clear();
+      });
+    } else if (button.classList.contains("decimal")) {
+      button.addEventListener("click", () => {
+        currentScreen+='.';
+        updateScreen();
+      });
+    } else if (button.classList.contains("equals")) {
+      button.addEventListener("click", () => {
+        equal();
+        console.log(secondOperand);
+      });
+    }
+  });
+}
+manageInput();
+
+function operatorIn(operator) {
+  if (currentScreen==='0' || currentScreen ===0) {
+    currentScreen = operator;
+  } else if (currentScreen === result) {
+    currentScreen = operator;
+    updateScreen();
+  } else {
+    currentScreen += operator;
+  }
+}
+
+function clear() {
+  firstOperand, (secondOperand = 0);
+  operator = "";
+  currentScreen = 0;
+  updateScreen();
+}
+
+function store(op) {
+  firstOperand = parseFloat(currentScreen);
+  console.log(firstOperand);
+  currentScreen = 0;
+  operator = op;
+}
+
+function equal() {
+  secondOperand = parseFloat(currentScreen);
+  result = operate(firstOperand, secondOperand, operator);
+  currentScreen = result;
+  updateScreen();
+}
+
+function sign() {
+  currentScreen = opposite(parseInt(currentScreen));
+  updateScreen();
+}
+
+function percentIt() {
+  currentScreen = toPercent(parseInt(currentScreen));
+  updateScreen();
+}
+
+// functions
 function add(a, b) {
   return a + b;
 }
@@ -21,11 +113,9 @@ function divide(a, b) {
   }
   return a / b;
 }
-
 function toPercent(a) {
   return a / 100;
 }
-
 function opposite(a) {
   if (a > 0) {
     return -a;
@@ -34,45 +124,22 @@ function opposite(a) {
   }
 }
 
-let num1, num2, opr;
-buttons.forEach(button => button.addEventListener("click", (e)=>{
-    if(e.target.id ==="+" || e.target.id ==="-" || e.target.id ==="*" || e.target.id ==="/"){
-        opr = e.target.id;
-    }else{
-        screen.innerText =e.target.innerText;
-        save(e.target.innerText);
-        
-        
-        
-    }
-}));
-
-function save(a){
-    num1 = a;
-    
-}
-
-
-let result;
-
 function operate(n1, n2, opr) {
   switch (opr) {
     case "+":
-      result = add(n1, n2);
+      return add(n1, n2);
       break;
     case "-":
-      result = sub(n1, n2);
+      return sub(n1, n2);
       break;
     case "*":
-      result = multiply(n1, n2);
+      return multiply(n1, n2);
       break;
     case "/":
-      result = divide(n1, n2);
+      return divide(n1, n2);
       break;
     default:
       break;
   }
 }
-operate(num1, num2, opr);
-
-
+operate(firstOperand, secondOperand, operator);
