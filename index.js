@@ -48,7 +48,6 @@ function manageInput() {
     } else if (button.classList.contains("equals")) {
       button.addEventListener("click", () => {
         equal();
-        console.log(secondOperand);
       });
     }
   });
@@ -75,7 +74,6 @@ function clear() {
 
 function store(op) {
   firstOperand = parseFloat(currentScreen);
-  console.log(firstOperand);
   currentScreen = 0;
   operator = op;
 }
