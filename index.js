@@ -12,14 +12,14 @@ function updateScreen() {
     screen.innerText = currentScreen.substring(0, 9);
   }
 }
-
+//Update the screen with 0
 updateScreen();
 
 function manageInput() {
   buttons.forEach((button) => {
     if (button.classList.contains("operand")) {
       button.addEventListener("click", () => {
-        if(button.value !== 0){
+        if (button.value !== 0) {
           operatorIn(button.value);
           updateScreen();
         }
@@ -42,7 +42,7 @@ function manageInput() {
       });
     } else if (button.classList.contains("decimal")) {
       button.addEventListener("click", () => {
-        currentScreen+='.';
+        currentScreen += ".";
         updateScreen();
       });
     } else if (button.classList.contains("equals")) {
@@ -55,7 +55,7 @@ function manageInput() {
 manageInput();
 
 function operatorIn(operator) {
-  if (currentScreen==='0' || currentScreen ===0) {
+  if (currentScreen === "0" || currentScreen === 0) {
     currentScreen = operator;
   } else if (currentScreen === result) {
     currentScreen = operator;
@@ -72,10 +72,10 @@ function clear() {
   updateScreen();
 }
 
-function store(op) {
+function store(inOperator) {
   firstOperand = parseFloat(currentScreen);
   currentScreen = 0;
-  operator = op;
+  operator = inOperator;
 }
 
 function equal() {
